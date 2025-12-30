@@ -16,7 +16,6 @@
             margin: 0;
             padding: 20px;
         }
-
         .quiz-container {
             background-color: #fff;
             border-radius: 15px;
@@ -26,8 +25,6 @@
             padding: 40px;
             position: relative;
         }
-
-        /* Başlık ve İstatistikler */
         .header {
             display: flex;
             justify-content: space-between;
@@ -63,7 +60,6 @@
         .score-correct { background-color: #e8f5e9; color: #2e7d32; }
         .score-wrong { background-color: #ffebee; color: #c62828; }
 
-        /* Soru Alanı */
         .question-area {
             margin-bottom: 30px;
         }
@@ -74,8 +70,6 @@
             line-height: 1.5;
             font-weight: 600;
         }
-
-        /* Konu Anlatımı Alanı */
         .explanation-box {
             background-color: #f8f9fa;
             border-left: 4px solid #007bff;
@@ -114,8 +108,6 @@
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        /* Şıklar */
         .options-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -153,8 +145,6 @@
             border-color: #dc3545;
             color: #721c24;
         }
-
-        /* Sonraki Butonu */
         .next-btn {
             width: 100%;
             padding: 16px;
@@ -174,7 +164,6 @@
             background-color: #0056b3;
         }
 
-        /* Sonuç Ekranı */
         #result-screen {
             display: none;
             text-align: center;
@@ -296,7 +285,6 @@
 
 <script>
     const questions = [
-        // --- BÖLÜM 1: TEMEL HTML KAVRAMLARI (Ders Notları 1-3. Hafta) ---
         {
             question: "HTML'in açılımı aşağıdakilerden hangisidir?",
             options: ["Hyper Tool Markup Language", "Hyper Text Markup Language", "Home Tool Markup Language", "Hyperlinks and Text Markup Language"],
@@ -357,8 +345,6 @@
             answer: "<!-- Yorum -->",
             explanation: "HTML'de yorum satırları <code>&lt;!-- yorum içeriği --&gt;</code> şeklinde yazılır. Bu yorumlar tarayıcıda görüntülenmez ama kaynak kodda görülebilir. Kod açıklamaları, notlar bırakmak veya kod bölümlerini geçici olarak devre dışı bırakmak için kullanışlıdır."
         },
-
-        // --- BÖLÜM 2: CSS TEMELLERİ & SEÇİCİLER (CSS.pptx) ---
         {
             question: "CSS'in açılımı nedir?",
             options: ["Creative Style Sheets", "Cascading Style Sheets", "Computer Style Sheets", "Colorful Style Sheets"],
@@ -481,8 +467,6 @@
             answer: "Elementlerin katman sırasını (öne/arkaya geçmesini) belirler",
             explanation: "<code>z-index</code>, konumlandırılmış (positioned) elementlerin (position: relative, absolute, fixed, sticky) <strong>yığın sırasını (stacking order)</strong> belirler. Daha yüksek değer, öne gelir. Negatif değerler arka plana gönderir. Sadece <code>position</code> özelliği atanmış elementlerde çalışır. Varsayılan değer <code>auto</code>'dur."
         },
-
-        // --- BÖLÜM 4: TABLOLAR VE FORMLAR (Ders Notları 4-5. Hafta) ---
         {
             question: "HTML'de tablo oluşturmak için kullanılan ana etiket hangisidir?",
             options: ["<tab>", "<table>", "<list>", "<grid>"],
@@ -543,8 +527,6 @@
             answer: "type='submit'",
             explanation: "<code>type='submit'</code> butonu, form verilerini sunucuya gönderir. Örnek: <code>&lt;input type='submit' value='Gönder'&gt;</code> veya <code>&lt;button type='submit'&gt;Gönder&lt;/button&gt;</code>. <code>type='reset'</code> formu temizler, <code>type='button'</code> ise varsayılan bir işlevi olmayan butondur (JavaScript ile kullanılır)."
         },
-
-        // --- BÖLÜM 5: PROJE YÖNETİMİ, HOSTING VE GENEL KAVRAMLAR (Ders Notları 1. ve 6. Hafta) ---
         {
             question: "Web sitesi dosyalarının internette yayınlanmak üzere barındırıldığı bilgisayarlara ne denir?",
             options: ["Domain", "Hosting (Server)", "Browser", "Modem"],
@@ -607,7 +589,6 @@
         }
     ];
 
-    // --- SİSTEM DEĞİŞKENLERİ ---
     let currentQuestionIndex = 0;
     let correctScore = 0;
     let wrongScore = 0;
@@ -622,7 +603,6 @@
     const explanationBox = document.getElementById("explanation-box");
     const explanationContent = document.getElementById("explanation-content");
 
-    // Başlangıç
     loadQuestion();
 
     function loadQuestion() {
@@ -635,7 +615,6 @@
         nextBtn.style.display = "none";
         explanationBox.style.display = "none";
 
-        // Şıkları karıştır
         let shuffledOptions = [...currentQ.options].sort(() => Math.random() - 0.5);
 
         shuffledOptions.forEach(opt => {
@@ -662,7 +641,6 @@
             wrongScore++;
             wrongCountEl.textContent = wrongScore;
             
-            // Doğru cevabı göster
             allBtns.forEach(b => {
                 if(b.textContent === correct) {
                     b.classList.add("correct");
@@ -671,7 +649,6 @@
             });
         }
         
-        // Konu anlatımını göster
         explanationContent.innerHTML = explanation;
         explanationBox.style.display = "block";
         nextBtn.style.display = "block";
@@ -693,20 +670,15 @@
         document.getElementById("final-correct").textContent = correctScore;
         document.getElementById("final-wrong").textContent = wrongScore;
 
-        // Puan hesaplama
         let score = Math.round((correctScore / totalQuestions) * 100);
         document.getElementById("final-score").textContent = score + "%";
-        
-        // Çember animasyonu (Stroke-dasharray: score, 100)
         document.getElementById("score-circle").setAttribute("stroke-dasharray", `${score}, 100`);
         
-        // Renk ayarlaması
         const circle = document.getElementById("score-circle");
-        if(score >= 70) circle.setAttribute("stroke", "#28a745"); // Yeşil
-        else if(score >= 50) circle.setAttribute("stroke", "#ffc107"); // Sarı
-        else circle.setAttribute("stroke", "#dc3545"); // Kırmızı
+        if(score >= 70) circle.setAttribute("stroke", "#28a745");
+        else if(score >= 50) circle.setAttribute("stroke", "#ffc107");
+        else circle.setAttribute("stroke", "#dc3545");
 
-        // Geri bildirim mesajı
         const feedback = document.getElementById("feedback-text");
         if(score >= 90) feedback.textContent = "🏆 Mükemmel! Ders notlarına ve CSS konularına tamamen hakimsin.";
         else if(score >= 70) feedback.textContent = "👏 Gayet başarılı! Ufak tekrarlarla tam puan alabilirsin.";
